@@ -39,7 +39,8 @@ jobs:
           node-version: 18
       # this step is necessary until we configure the custom domain for GH Pages properly
       - name: (temporary) Change URL and baseURL for GH Pages
-        run: sed -i "s/url: 'https:\/\/blog.darlinghq.com',/url: 'https:\/\/darlinghq.github.io',/g; s/baseUrl: '\/',/baseUrl: '\/blog',/g" docusaurus.config.js
+        run: >
+          sed -i "s/url: 'https:\/\/blog.darlinghq.com',/url: 'https:\/\/darlinghq.github.io',/g; s/baseUrl: '\/',/baseUrl: '\/blog',/g" docusaurus.config.js
       - run: npm ci
       - run: npm run build
       - name: Upload artifact
