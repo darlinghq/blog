@@ -11,7 +11,7 @@ export default function Giscus() {
 			repoId="R_kgDOJlSqQQ"
 			category="Blog Comments"
 			categoryId="DIC_kwDOJlSqQc4CWn3C"
-			mapping="pathname"
+			mapping="title"
 			strict="1"
 			reactionsEnabled="1"
 			emit-metadata="0"
