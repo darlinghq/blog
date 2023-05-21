@@ -7,14 +7,14 @@ export default function Giscus() {
 
 	return (
 		<GiscusReact
-			repo="darlinghq/blog"
-			repoId="R_kgDOJlSqQQ"
-			category="Blog Comments"
-			categoryId="DIC_kwDOJlSqQc4CWn3C"
+			repo="darlinghq/darling"
+			repoId="MDEwOlJlcG9zaXRvcnk3MDc3Njkw"
+			category="Blog comments"
+			categoryId="DIC_kwDOAGv_Os4CWo3g"
 			mapping="title"
 			strict="1"
 			reactionsEnabled="1"
-			emit-metadata="0"
+			emitMetadata="0"
 			inputPosition="bottom"
 			theme={colorMode}
 			lang="en"
