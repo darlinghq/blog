@@ -96,19 +96,35 @@ This filesystem virtualization system also opens up more possibilities: we are n
 
 ## GUI Support Advancements
 
+macOS has some great CLI programs and tools (especially for developers), but of course, the main thing macOS is known for is its collection of great GUI apps. While Darling is still a long way from being able to run many popular apps&mdash;including Logic Pro, Garageband, and Xcode, to name a few&mdash;we *have* made some notable advancements in our GUI support these past few years.
+
 ### Initial Metal Support
+
+## Debugging Improvements
+
+As you can imagine, when developing Darling, we often have to trace and debug programs to figure out why they're not working properly. We employ a variety of different methods to do so; in a pinch, even the classic method of "Got here" printing can work. Thankfully, we have access to better debugging tools within Darling, and this is something we've also improved over the last few years.
+
+### xtrace
+
+[xtrace](https://docs.darlinghq.org/contributing/debugging.html#xtrace) (our strace-like tool for debugging Darwin syscalls made into libsystem_kernel) got a major overhaul from [Sergey][bugaevc] in early 2020. Among other things, he enabled xtrace to print syscall arguments (often with their symbolic names), added color to the output, and added [MIG](https://docs.darlinghq.org/internals/macos-specifics/mach-ports.html#mig) routine tracing.
+
+But wait, there's more! Later that year, [Ariel][facekapow] updated xtrace to support multi-threaded programs. A couple years later (in 2022), he updated xtrace again, this time to allow output to be printed to thread-specific logs (avoiding the usual jumbled output produced by multi-threaded programs), and to print more descriptive call-specific details for a number of calls (including `posix_spawn`, `select`, `execve`, and the `kevent` family of calls). Additionally, he also added support for tracing 32-bit programs.
+
+### LLDB
+
+Of course, often the best tool for tracking down bugs is a debugger. Back when we first started using a userspace binary loader (the first time, before the LKM), we had a debugger (based off [modified GDB sources](https://github.com/darlinghq/darling-gdb)). When we transitioned to an in-kernel binary loader with the LKM, however, this Back in 2020, [Luboš][LubosD] 
 
 ## Miscellaneous Bug Fixes and Improvements
 
 ## The Future
 
-As mentioned earlier, darlingserver makes it easier to both use and develop Darling. However, the bigger motivation was making it easier to *use* Darling. We'd like to continue improving the user experience in Darling wherever possible, which is why we have some work in-progress to completely get rid of privileges/SUID (currently still needed to mount the overlayfs). Furthermore, we're also considering getting rid of the overlayfs altogether, which would allow Darling prefixes to be located on filesystems not supported by overlayfs. This is particularly useful for users with encrypted home directories, since overlayfs does not support storing the upper layer on an encrypted filesystem like eCryptFS. Farther in the future, we'd like to make it possible to run Darling within a Flatpak and maybe even allow it to be used as a Flatpak runtime for macOS apps. Getting rid of the kernel module also opens up more possibilities for supporting additional platforms such as Android.
+As mentioned earlier, darlingserver makes it easier to both use and develop Darling. However, the bigger motivation was making it easier to *use* Darling. We'd like to continue improving the user experience in Darling wherever possible, which is why we have some work in-progress to completely get rid of privileges/SUID (currently still needed to mount the overlayfs). Furthermore, we're also considering getting rid of the overlayfs altogether, which would allow Darling prefixes to be located on filesystems not supported by overlayfs. This is particularly useful for users with encrypted home directories, since overlayfs does not support storing the upper layer on an encrypted filesystem like eCryptFS. Further in the future, we'd like to make it possible to run Darling within a Flatpak and maybe even allow it to be used as a Flatpak runtime for macOS apps. Getting rid of the kernel module also opens up more possibilities for supporting additional platforms such as Android.
 
-[Tommy][CuriousTommy] is currently working on adding ARM support to Darling. This would allow us to run some newer macOS applications that are only built for ARM (due to the deprecation of Intel processors for Macs) and maybe even iOS apps in the future. For the time being, the goal is just to get apps running on their respective host platforms (i.e. ARM Darling on ARM hosts, x86 Darling on x86 hosts), but in the future, we'd also like to make it possible to run binaries with different architectures than the host. [Sergey][bugaevc] said it best in issue https://github.com/darlinghq/darling/issues/863#issuecomment-675834045:
+[Tommy][CuriousTommy] is currently working on adding ARM support to Darling. This would allow us to run some newer macOS applications that are only built for ARM (due to Apple's move from Intel processors to Apple Silicon) and maybe even iOS apps in the future. For the time being, the goal is just to get apps running on their respective host platforms (i.e. ARM Darling on ARM hosts, x86 Darling on x86 hosts), but in the future, we'd also like to make it possible to run binaries with different architectures than the host. [Sergey][bugaevc] said it best in issue https://github.com/darlinghq/darling/issues/863#issuecomment-675834045:
 
-> Darling will definitely continue — at least as a way to run x86_64 (or x86) binaries on x86_64 Linux systems. We also want to get arm64-on-arm64 binaries working (but not there yet).
+> Darling will definitely continue &mdash; at least as a way to run x86_64 (or x86) binaries on x86_64 Linux systems. We also want to get arm64-on-arm64 binaries working (but not there yet).
 >
-> Then, there's emulation. We're not going to implement a complete emulation solution from scratch, so the potential Darling Rosetta would be based on an existing emulator — usermode QEMU. We've been envisioning a bright distant future where Darling is able to run binaries for either ppc/ppc64/x86/x64/arm64 on either of those architectures, using Darling Rosetta if the host and the program architecture don't match. But we're probably far away from that. Just arm64 on x64 is fairly possible though, but we have to get native arm64 on arm64 working first.
+> Then, there's emulation. We're not going to implement a complete emulation solution from scratch, so the potential Darling Rosetta would be based on an existing emulator &mdash; usermode QEMU. We've been envisioning a bright distant future where Darling is able to run binaries for either ppc/ppc64/x86/x64/arm64 on either of those architectures, using Darling Rosetta if the host and the program architecture don't match. But we're probably far away from that. Just arm64 on x64 is fairly possible though, but we have to get native arm64 on arm64 working first.
 
 The modular build changes described earlier have made it more convenient to build and install Darling by choosing the components you want and only building and installing those. We'd like to go a step further: we currently have a CI that builds Debian and RPM packages for each commit; these packages are already split up into different per-component packages. Wouldn't it be great if you could easily install them? That's why there are plans to publish APT and RPM repos for the packages built by the CI, which would allow the vast majority of Darling's users to easily install and update Darling.
 
