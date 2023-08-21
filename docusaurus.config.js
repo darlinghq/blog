@@ -12,7 +12,7 @@ async function createConfig() {
 		tagline: 'macOS translation layer for Linux',
 		favicon: 'img/favicon.ico',
 
-		url: 'https://blog.darlinghq.com',
+		url: 'https://blog.darlinghq.org',
 		baseUrl: '/',
 
 		// GitHub pages deployment config.
