@@ -98,6 +98,9 @@ async function createConfig() {
 					darkTheme: darkCodeTheme,
 					additionalLanguages: ['cmake', 'nasm'],
 				},
+				colorMode: {
+					respectPrefersColorScheme: true,
+				},
 			}),
 	};
 };
