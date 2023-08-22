@@ -76,6 +76,11 @@ async function createConfig() {
 							label: 'GitHub',
 							position: 'right',
 						},
+						{
+							href: 'https://darlinghq.org',
+							label: 'Main Site',
+							position: 'right',
+						},
 					],
 				},
 				footer: {
@@ -87,6 +92,10 @@ async function createConfig() {
 								{
 									label: 'GitHub',
 									href: 'https://github.com/darlinghq/darling',
+								},
+								{
+									label: 'Main Site',
+									href: 'https://darlinghq.org',
 								},
 							],
 						},
