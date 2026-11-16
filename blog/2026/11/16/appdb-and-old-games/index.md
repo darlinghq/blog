@@ -36,7 +36,7 @@ We also tried an older ioquake3 release from 2009, and it worked too. Of course,
 
 ![ioquake3 running in Darling](./ioquake3.jpg)
 
-Running a 15-year-old game would be no feat on Windows. Microsoft takes backwards compatibility seriously, and old games usually just run. In Apple's world, however, 15 years is ancient history: the platform has gone through several architecture transitions and has dropped entire generations of software along the way.
+Running a 15-year-old game would be no feat on Windows. Microsoft takes backwards compatibility (fairly) seriously, and old games usually just run. In Apple's world, however, 15 years is ancient history: the platform has gone through several architecture transitions and has dropped entire generations of software along the way.
 
 This is where Darling can do better than Apple. Our goal is to keep supporting what Apple has thrown away, so that software people paid for, or software whose authors are no longer around to update it, does not simply disappear.
 
